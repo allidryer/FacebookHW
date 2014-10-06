@@ -24,7 +24,7 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
 
         var scrollWidth: CGFloat  = self.view.frame.size.width
         var scrollHeight: CGFloat  = self.view.frame.size.height
-        self.scrollView!.contentSize = CGSizeMake(scrollWidth, scrollHeight + 100)
+        self.scrollView!.contentSize = CGSizeMake(scrollWidth, scrollHeight)
         
         scrollView.delegate = self
         
@@ -41,12 +41,19 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView!) {
+        if scrollView.contentOffset.y <= -100 {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             self.scrollView.backgroundColor = UIColor(white: 0, alpha: 0)
             self.photoActionsImageView.alpha = 0
             self.doneButton.alpha = 0
         }, completion: nil)
-        println("scrolling!")
+        } else if scrollView.contentOffset.y > -100 {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                self.scrollView.backgroundColor = UIColor(white: 0, alpha: 1)
+                self.photoActionsImageView.alpha = 1
+                self.doneButton.alpha = 1
+                }, completion: nil)
+        }
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView!) {
@@ -59,15 +66,7 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
             if scrollView.contentOffset.y <= -100 {
                 //println("DISMISSED")
                 dismissViewControllerAnimated(true, completion: nil)
-            } else {
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    self.scrollView.backgroundColor = UIColor(white: 0, alpha: 1)
-                    self.photoActionsImageView.alpha = 1
-                    self.doneButton.alpha = 1
-                    }, completion: nil)
-                
             }
-            
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
