@@ -78,14 +78,17 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
             copyImageViewToSegue.contentMode = UIViewContentMode.ScaleAspectFill
             copyImageViewToSegue.clipsToBounds = true
             
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
                 copyImageViewToSegue.transform = CGAffineTransformMakeScale(scalefactor, scalefactor)
                 copyImageViewToSegue.center.x = 320 / 2
                 copyImageViewToSegue.center.y = 287
-                toViewController.view.alpha = 1
                 }, completion: { (finished: Bool) -> Void in
-                    transitionContext.completeTransition(true)
-                    copyImageViewToSegue.removeFromSuperview()
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    toViewController.view.alpha = 1
+                    }, completion: { (finished: Bool) -> Void in
+                        transitionContext.completeTransition(true)
+                        copyImageViewToSegue.removeFromSuperview()
+                })
             })
         } else {
             copyImageViewToSegue.image = imageViewToSegue.image
@@ -97,16 +100,19 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
             
             copyImageViewToSegue.transform = CGAffineTransformMakeScale(scalefactor, scalefactor)
             fromViewController.view.alpha = 1
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
-                copyImageViewToSegue.transform = CGAffineTransformMakeScale(1, 1)
-                copyImageViewToSegue.center.x = imageViewCenterX
-                copyImageViewToSegue.center.y = imageViewCenterY
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
                 fromViewController.view.alpha = 0
-                }) { (finished: Bool) -> Void in
-                    transitionContext.completeTransition(true)
-                    copyImageViewToSegue.removeFromSuperview()
+                }, completion: { (finished: Bool) -> Void in
+                    UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
+                        copyImageViewToSegue.transform = CGAffineTransformMakeScale(1, 1)
+                        copyImageViewToSegue.center.x = imageViewCenterX
+                        copyImageViewToSegue.center.y = imageViewCenterY
+                        }, completion: { (finished: Bool) -> Void in
+                            transitionContext.completeTransition(true)
+                            copyImageViewToSegue.removeFromSuperview()
+                    })
+                })
             }
-        }
     }
 
     override func didReceiveMemoryWarning() {

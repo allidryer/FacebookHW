@@ -42,11 +42,14 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         if scrollView.contentOffset.y <= -100 {
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.scrollView.backgroundColor = UIColor(white: 0, alpha: 0)
+        UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
             self.photoActionsImageView.alpha = 0
             self.doneButton.alpha = 0
-        }, completion: nil)
+            }, completion: { (finished: Bool) -> Void in
+                UIView.animateWithDuration(0.2, delay: 0.1, options: nil, animations: { () -> Void in
+                    self.scrollView.backgroundColor = UIColor(white: 0, alpha: 0)
+                }, completion: nil)
+        })
         } else if scrollView.contentOffset.y > -100 {
             UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.scrollView.backgroundColor = UIColor(white: 0, alpha: 1)
@@ -54,10 +57,6 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
                 self.doneButton.alpha = 1
                 }, completion: nil)
         }
-    }
-    
-    func scrollViewWillBeginDragging(scrollView: UIScrollView!) {
-    
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView!,
@@ -68,11 +67,6 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
                 dismissViewControllerAnimated(true, completion: nil)
             }
     }
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView!) {
-        // This method is called when the scrollview finally stops scrolling.
-    }
-
     
 
     /*
