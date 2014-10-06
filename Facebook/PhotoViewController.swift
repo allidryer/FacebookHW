@@ -21,6 +21,8 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         imageView.image = image
+        scrollView.maximumZoomScale = 2
+        scrollView.minimumZoomScale = 1
 
         var scrollWidth: CGFloat  = self.view.frame.size.width
         var scrollHeight: CGFloat  = self.view.frame.size.height
@@ -68,6 +70,9 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
             }
     }
     
+    func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
+        return imageView
+    }
 
     /*
     // MARK: - Navigation
