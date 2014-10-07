@@ -74,54 +74,49 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
         var imageViewCenterY = self.imageViewToSegue.center.y + 110
 
         if (isPresenting) {
-            copyImageView.contentMode = UIViewContentMode.ScaleAspectFill
-            copyImageView.clipsToBounds = true
-            copyImageView.image = imageViewToSegue.image
-            window.addSubview(copyImageView)
-            
-            containerView.addSubview(toViewController.view)
             toViewController.view.alpha = 0
             
-            if let vc = toViewController as? PhotoViewController {
-                vc.imageView.hidden = false
-            }
-            
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
-                toViewController.view.alpha = 1
-                copyImageView.transform = CGAffineTransformMakeScale(scalefactor, scalefactor)
-                copyImageView.center.x = 320 / 2
-                copyImageView.center.y = 287
-                }, completion: { (finished: Bool) -> Void in
-                        copyImageView.removeFromSuperview()
-                        transitionContext.completeTransition(true)
-                })
-        } else {
-            
-            let vc = fromViewController as PhotoViewController
-            
-            copyImageView.clipsToBounds = true
-            copyImageView.contentMode = imageViewToSegue.contentMode
             copyImageView.image = imageViewToSegue.image
+            copyImageView.contentMode = UIViewContentMode.ScaleAspectFill
+            copyImageView.clipsToBounds = true
             
             window.addSubview(copyImageView)
-            containerView.addSubview(fromViewController.view)
+            containerView.addSubview(toViewController.view)
             
-            copyImageView.center = photoViewImageCenter
-            
-            copyImageView.transform = CGAffineTransformMakeScale(scalefactor, scalefactor)
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                fromViewController.view.alpha = 1
-                }, completion: { (finished: Bool) -> Void in
-                    UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
-                        copyImageView.transform = CGAffineTransformMakeScale(1, 1)
-                        copyImageView.center.x = imageViewCenterX
-                        copyImageView.center.y = imageViewCenterY
-                        }, completion: { (finished: Bool) -> Void in
-                            copyImageView.removeFromSuperview()
-                            transitionContext.completeTransition(true)
-                    })
-                })
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
+                copyImageView.frame.size.width = 320
+                copyImageView.frame.size.height = 320 * (copyImageView.image!.size.height / copyImageView.image!.size.width)
+                copyImageView.center.x = 320 / 2
+                copyImageView.center.y = 568 / 2
+                toViewController.view.alpha = 1
+                }) { (finished: Bool) -> Void in
+                    copyImageView.removeFromSuperview()
+                    transitionContext.completeTransition(true)
             }
+        } else {
+            
+            copyImageView.image = imageViewToSegue.image
+            copyImageView.contentMode = UIViewContentMode.ScaleAspectFill
+            copyImageView.clipsToBounds = true
+            copyImageView.frame.size.width = 320
+            copyImageView.frame.size.height = 320 * (copyImageView.image!.size.height / copyImageView.image!.size.width)
+            copyImageView.center.x = 320 / 2
+            copyImageView.center.y = 568 / 2
+            
+            window.addSubview(copyImageView)
+            
+            toViewController.view.alpha = 0
+            fromViewController.view.alpha = 0
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                toViewController.view.alpha = 1
+                copyImageView.frame = window.convertRect(self.imageViewToSegue.frame, fromView: self.scrollView)
+                }, completion: { (finished: Bool) -> Void in
+                    copyImageView.removeFromSuperview()
+                    transitionContext.completeTransition(true)
+            })
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
