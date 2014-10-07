@@ -102,7 +102,7 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
             toViewController.view.alpha = 0
             fromViewController.view.alpha = 0
             
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
                 toViewController.view.alpha = 1
                 copyImageView.frame = window.convertRect(self.imageViewToSegue.frame, fromView: self.scrollView)
                 }, completion: { (finished: Bool) -> Void in
