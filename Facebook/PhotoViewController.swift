@@ -48,26 +48,30 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
             self.photoActionsImageView.alpha = 0
             self.doneButton.alpha = 0
             }, completion: { (finished: Bool) -> Void in
-                UIView.animateWithDuration(0.2, delay: 0.1, options: nil, animations: { () -> Void in
+                UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
                     self.scrollView.backgroundColor = UIColor(white: 0, alpha: 0)
                 }, completion: nil)
         })
         } else if scrollView.contentOffset.y > -100 {
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
                 self.scrollView.backgroundColor = UIColor(white: 0, alpha: 1)
-                self.photoActionsImageView.alpha = 1
-                self.doneButton.alpha = 1
-                }, completion: nil)
-        }
+                }, completion: { (finished: Bool) -> Void in
+                    UIView.animateWithDuration(0.2, delay: 0, options: nil, animations: { () -> Void in
+                        self.photoActionsImageView.alpha = 1
+                        self.doneButton.alpha = 1
+                        }, completion: nil)
+                    })
+            }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView!,
-        willDecelerate decelerate: Bool) {
-            //println("Content Offset: \(scrollView.contentOffset.y)")
-            if scrollView.contentOffset.y <= -100 {
-                //println("DISMISSED")
-                dismissViewControllerAnimated(true, completion: nil)
-            }
+    func scrollViewDidEndDragging(scrollView: UIScrollView!, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y <= -100 {
+            UIView.animateWithDuration(0.3, delay: 0, options: nil, animations: { () -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+                }, completion: { (finished: Bool) -> Void in
+                
+            })
+        }
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView!) -> UIView! {
