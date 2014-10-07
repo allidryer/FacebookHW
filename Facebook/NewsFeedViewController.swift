@@ -109,7 +109,6 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
                     copyImageView.removeFromSuperview()
                     transitionContext.completeTransition(true)
             })
-            
         }
     }
 
