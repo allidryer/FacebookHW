@@ -39,7 +39,6 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
         destinationViewController.transitioningDelegate = self
         
         destinationViewController.image = self.imageViewToSegue.image
-
     }
     
     func animationControllerForPresentedController(presented: UIViewController!, presentingController presenting: UIViewController!, sourceController source: UIViewController!) -> UIViewControllerAnimatedTransitioning! {
@@ -66,12 +65,6 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
         var window = UIApplication.sharedApplication().keyWindow
         var frame = window.convertRect(imageViewToSegue.frame, fromView: scrollView)
         var copyImageView = UIImageView(frame: frame)
-        
-        var scalefactor = window.frame.width / copyImageView.frame.width
-        
-        var photoViewImageCenter = CGPoint(x: 320/2, y: 287)
-        var imageViewCenterX = self.imageViewToSegue.center.x
-        var imageViewCenterY = self.imageViewToSegue.center.y + 110
 
         if (isPresenting) {
             toViewController.view.alpha = 0
@@ -98,6 +91,7 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
             copyImageView.image = imageViewToSegue.image
             copyImageView.contentMode = UIViewContentMode.ScaleAspectFill
             copyImageView.clipsToBounds = true
+            
             copyImageView.frame.size.width = 320
             copyImageView.frame.size.height = 320 * (copyImageView.image!.size.height / copyImageView.image!.size.width)
             copyImageView.center.x = 320 / 2
