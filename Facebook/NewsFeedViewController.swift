@@ -55,7 +55,7 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
         // The value here should be the duration of the animations scheduled in the animationTransition method
         return 0.4
     }
-    
+        
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         println("animating transition")
         var containerView = transitionContext.containerView()
@@ -65,7 +65,7 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
         var window = UIApplication.sharedApplication().keyWindow
         var frame = window.convertRect(imageViewToSegue.frame, fromView: scrollView)
         var copyImageView = UIImageView(frame: frame)
-
+        
         if (isPresenting) {
             toViewController.view.alpha = 0
             
@@ -85,6 +85,7 @@ class NewsFeedViewController: UIViewController, UIViewControllerTransitioningDel
                 }) { (finished: Bool) -> Void in
                     copyImageView.removeFromSuperview()
                     transitionContext.completeTransition(true)
+                    toViewController.view.backgroundColor = UIColor.clearColor()
             }
         } else {
             

@@ -16,9 +16,11 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var doneButton: UIButton!
     
     var image: UIImage!
+    var endingDragging: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         imageView.image = image
         scrollView.maximumZoomScale = 2
@@ -32,6 +34,7 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
        
     }
 
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,10 +45,13 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView!) {
+        var difference = scrollView.contentOffset.y / 284
+        
         if scrollView.contentOffset.y <= -100 {
-        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.photoActionsImageView.alpha = 0
             self.doneButton.alpha = 0
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+            self.scrollView.backgroundColor = UIColor(white: 0, alpha: 1 - abs(difference))
             }, completion: nil)
         } else if scrollView.contentOffset.y > -100 {
             UIView.animateWithDuration(0.4, animations: { () -> Void in
